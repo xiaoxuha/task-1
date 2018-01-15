@@ -1,0 +1,61 @@
+# baseURI: http://example.org/floodplan/role
+# imports: http://example.org/floodplan/agent
+# imports: http://example.org/floodplan/goal
+# prefix: role
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role: <http://example.org/floodplan/role#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/role>
+  rdf:type owl:Ontology ;
+  owl:imports <http://example.org/floodplan/agent> ;
+  owl:imports <http://example.org/floodplan/goal> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+role:CombatAgencyForFloods
+  rdf:type role:Description ;
+.
+role:Constraints
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+role:Description
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+role:Role
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+role:SES
+  rdf:type role:Role ;
+  role:hasDescription <http://example.org/floodplan/agent#StateEmergencyService> ;
+  role:hasDescription role:CombatAgencyForFloods ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#CoordinatingFloodOperation> ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#CoordinatingTheAgenciesAndOrganisations> ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#Evacuation> ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#PlanningForTsunami> ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#RespondingToTsunami> ;
+  role:hasResponsibilitiesOf <http://example.org/floodplan/goal#Warning> ;
+.
+role:hasConstraints
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain role:Role ;
+  rdfs:range role:Constraints ;
+  rdfs:range xsd:string ;
+.
+role:hasDescription
+  rdf:type rdf:Property ;
+  rdfs:domain role:Role ;
+  rdfs:range <http://example.org/floodplan/agent#Agent> ;
+  rdfs:range role:Description ;
+.
+role:hasResponsibilitiesOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain role:Role ;
+  rdfs:range <http://example.org/floodplan/goal#MainGoal> ;
+  rdfs:range <http://example.org/floodplan/goal#SubGoal> ;
+.
