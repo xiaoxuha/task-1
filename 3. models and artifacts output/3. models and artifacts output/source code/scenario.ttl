@@ -1,0 +1,125 @@
+# baseURI: http://example.org/floodplan/scenario
+# imports: http://example.org/floodplan/agent
+# imports: http://example.org/floodplan/goal
+# prefix: scenario
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix scenario: <http://example.org/floodplan/scenario#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/scenario>
+  rdf:type owl:Ontology ;
+  owl:imports <http://example.org/floodplan/agent> ;
+  owl:imports <http://example.org/floodplan/goal> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+scenario:Activities
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:equivalentClass <http://example.org/floodplan/agent#Actions> ;
+  owl:equivalentClass <http://example.org/floodplan/goal#SubGoal> ;
+.
+scenario:Condition
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+scenario:Description
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+scenario:Initiator
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:equivalentClass <http://example.org/floodplan/role#Role> ;
+.
+scenario:Parallel
+  rdf:type scenario:Condition ;
+.
+scenario:Postcondition
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+scenario:Precondition
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+scenario:Scenario
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:equivalentClass <http://example.org/floodplan/goal#MainGoal> ;
+.
+scenario:Sequential
+  rdf:type scenario:Condition ;
+.
+scenario:Steps
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+scenario:Steps_1
+  rdf:type scenario:Steps ;
+.
+scenario:Steps_2
+  rdf:type scenario:Steps ;
+.
+scenario:Steps_3
+  rdf:type scenario:Steps ;
+.
+scenario:Steps_4
+  rdf:type scenario:Steps ;
+.
+scenario:areInConditionOf
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Activities ;
+  rdfs:range scenario:Condition ;
+  rdfs:range xsd:string ;
+.
+scenario:hasActivities
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range scenario:Activities ;
+  owl:equivalentProperty <http://example.org/floodplan/goal#hasSubgoal> ;
+.
+scenario:hasDescription
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range scenario:Description ;
+  rdfs:range xsd:string ;
+.
+scenario:hasInitiator
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range scenario:Initiator ;
+  owl:equivalentProperty <http://example.org/floodplan/goal#isAchievedBy> ;
+.
+scenario:hasPostcondition
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range scenario:Postcondition ;
+  rdfs:range xsd:string ;
+.
+scenario:hasPrecondition
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range scenario:Precondition ;
+  rdfs:range xsd:string ;
+.
+scenario:isCompletedBy
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain scenario:Activities ;
+  rdfs:range <http://example.org/floodplan/role#Role> ;
+  owl:equivalentProperty <http://example.org/floodplan/goal#isAchievedBy> ;
+.
+scenario:isTheStepOf
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Activities ;
+  rdfs:range scenario:Steps ;
+  rdfs:range xsd:string ;
+.
+scenario:isTriggeredBy
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain scenario:Scenario ;
+  rdfs:range <http://example.org/floodplan/agent#Trigger> ;
+  rdfs:range xsd:string ;
+.

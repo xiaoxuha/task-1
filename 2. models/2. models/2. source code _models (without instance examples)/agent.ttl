@@ -1,0 +1,72 @@
+# baseURI: http://example.org/floodplan/agent
+# imports: http://example.org/floodplan/environment
+# imports: http://example.org/floodplan/role
+# prefix: agent
+
+@prefix agent: <http://example.org/floodplan/agent#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/agent>
+  rdf:type owl:Ontology ;
+  owl:imports <http://example.org/floodplan/environment> ;
+  owl:imports <http://example.org/floodplan/role> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+agent:Actions
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  owl:equivalentClass <http://example.org/floodplan/goal#SubGoal> ;
+.
+agent:Activity
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+agent:Agent
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+agent:Functionality
+  rdf:type owl:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+agent:Trigger
+  rdf:type owl:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+agent:hasActionsOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain agent:Activity ;
+  rdfs:range agent:Actions ;
+  rdfs:range <http://example.org/floodplan/goal#SubGoal> ;
+  owl:equivalentProperty <http://example.org/floodplan/goal#hasSubgoal> ;
+.
+agent:hasEnvironmentConsiderations
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain agent:Agent ;
+  rdfs:range <http://example.org/floodplan/environment#Entity> ;
+.
+agent:hasFunctionality
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain agent:Activity ;
+  rdfs:range agent:Functionality ;
+  rdfs:range xsd:string ;
+.
+agent:isInvolvedInActivityOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain agent:Agent ;
+  rdfs:range agent:Activity ;
+.
+agent:isTriggeredBy
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain agent:Activity ;
+  rdfs:range agent:Trigger ;
+  rdfs:range xsd:string ;
+.
+agent:playsRoleOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain agent:Agent ;
+  rdfs:range <http://example.org/floodplan/role#Role> ;
+.
