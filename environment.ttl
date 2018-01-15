@@ -1,0 +1,77 @@
+# baseURI: http://example.org/floodplan/environment
+# imports: http://example.org/floodplan/role
+# prefix: environment
+
+@prefix environment: <http://example.org/floodplan/environment#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/environment>
+  rdf:type owl:Ontology ;
+  owl:imports <http://example.org/floodplan/role> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+environment:Address
+  rdf:type owl:Class ;
+  rdfs:subClassOf environment:Attributes ;
+.
+environment:Address_1
+  rdf:type environment:Address ;
+.
+environment:Attributes
+  rdf:type owl:Class ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+environment:ContactNumbers
+  rdf:type owl:Class ;
+  rdfs:subClassOf environment:Attributes ;
+.
+environment:ContactNumbers_1
+  rdf:type environment:ContactNumbers ;
+.
+environment:ContactPerson
+  rdf:type owl:Class ;
+  rdfs:subClassOf environment:Attributes ;
+.
+environment:ContactPerson_1
+  rdf:type environment:ContactPerson ;
+.
+environment:Entity
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+environment:ListOfAgenciesAndOrganisations
+  rdf:type owl:Class ;
+  rdfs:subClassOf environment:Entity ;
+.
+environment:ListOfAgenciesAndOrganisations_1
+  rdf:type environment:ListOfAgenciesAndOrganisations ;
+  environment:hasAttributesOf environment:Address_1 ;
+  environment:hasAttributesOf environment:ContactNumbers_1 ;
+  environment:hasAttributesOf environment:ContactPerson_1 ;
+  environment:hasAttributesOf environment:NameOfAgenciesAndOrganisations_1 ;
+  environment:hasRolesInvolved <http://example.org/floodplan/role#SES> ;
+.
+environment:NameOfAgenciesAndOrganisations
+  rdf:type owl:Class ;
+  rdfs:subClassOf environment:Attributes ;
+.
+environment:NameOfAgenciesAndOrganisations_1
+  rdf:type environment:NameOfAgenciesAndOrganisations ;
+.
+environment:hasAttributesOf
+  rdf:type owl:DatatypeProperty ;
+  rdfs:domain environment:Entity ;
+  rdfs:range environment:Attributes ;
+.
+environment:hasRolesInvolved
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain environment:Entity ;
+  rdfs:range <http://example.org/floodplan/role#Role> ;
+.
+<http://xmlns.com/foaf/0.1/phone>
+  rdfs:domain environment:Entity ;
+  rdfs:range environment:ContactNumbers ;
+.

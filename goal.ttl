@@ -1,0 +1,96 @@
+# baseURI: http://example.org/floodplan/goal
+# imports: http://example.org/floodplan/role
+# prefix: goal
+
+@prefix goal: <http://example.org/floodplan/goal#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/goal>
+  rdf:type owl:Ontology ;
+  owl:imports <http://example.org/floodplan/role> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+goal:CoordinatingFloodOperation
+  rdf:type goal:MainGoal ;
+  goal:hasSubgoal goal:CoordinatingTheAgenciesAndOrganisations ;
+  goal:hasSubgoal goal:Evacuation ;
+  goal:hasSubgoal goal:PlanningForTsunami ;
+  goal:hasSubgoal goal:RespondingToTsunami ;
+  goal:hasSubgoal goal:Warning ;
+  goal:isAchievedBy <http://example.org/floodplan/role#SES> ;
+.
+goal:CoordinatingTheAgenciesAndOrganisations
+  rdf:type goal:SubGoal ;
+  goal:isSubgoalOf goal:CoordinatingFloodOperation ;
+.
+goal:Evacuation
+  rdf:type goal:SubGoal ;
+  goal:hasParent goal:PlanningForTsunami ;
+  goal:hasParent goal:RespondingToTsunami ;
+  goal:isSubgoalOf goal:CoordinatingFloodOperation ;
+.
+goal:MainGoal
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+goal:PlanningForTsunami
+  rdf:type goal:SubGoal ;
+  goal:hasChild goal:Evacuation ;
+  goal:hasChild goal:Warning ;
+  goal:isSubgoalOf goal:CoordinatingFloodOperation ;
+.
+goal:RespondingToTsunami
+  rdf:type goal:SubGoal ;
+  goal:hasChild goal:Evacuation ;
+  goal:hasChild goal:Warning ;
+  goal:isSubgoalOf goal:CoordinatingFloodOperation ;
+.
+goal:SubGoal
+  rdf:type owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+.
+goal:Warning
+  rdf:type goal:SubGoal ;
+  goal:hasParent goal:PlanningForTsunami ;
+  goal:hasParent goal:RespondingToTsunami ;
+  goal:isSubgoalOf goal:CoordinatingFloodOperation ;
+.
+goal:achieves
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain <http://example.org/floodplan/role#Role> ;
+  rdfs:range goal:MainGoal ;
+  rdfs:range goal:SubGoal ;
+.
+goal:hasChild
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain goal:SubGoal ;
+  rdfs:range goal:SubGoal ;
+.
+goal:hasParent
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain goal:SubGoal ;
+  rdfs:range goal:SubGoal ;
+.
+goal:hasSubgoal
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain goal:MainGoal ;
+  rdfs:range goal:SubGoal ;
+.
+goal:isAchievedBy
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain goal:MainGoal ;
+  rdfs:domain goal:SubGoal ;
+  rdfs:range <http://example.org/floodplan/role#Role> ;
+  owl:inverseOf goal:achieves ;
+.
+goal:isSubgoalOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:domain goal:SubGoal ;
+  rdfs:range goal:MainGoal ;
+.
+<http://example.org/floodplan/role#SES>
+  goal:achieves goal:CoordinatingFloodOperation ;
+.
