@@ -1,0 +1,323 @@
+# baseURI: http://example.org/floodplan/shapes
+# imports: http://datashapes.org/dash
+# imports: http://example.org/floodplan/agent
+# imports: http://example.org/floodplan/environment
+# imports: http://example.org/floodplan/goal
+# imports: http://example.org/floodplan/interaction
+# imports: http://example.org/floodplan/organisation
+# imports: http://example.org/floodplan/role
+# imports: http://example.org/floodplan/scenario
+# prefix: shapes
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shapes: <http://example.org/floodplan/shapes#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/floodplan/shapes>
+  rdf:type owl:Ontology ;
+  owl:imports <http://datashapes.org/dash> ;
+  owl:imports <http://example.org/floodplan/agent> ;
+  owl:imports <http://example.org/floodplan/environment> ;
+  owl:imports <http://example.org/floodplan/goal> ;
+  owl:imports <http://example.org/floodplan/interaction> ;
+  owl:imports <http://example.org/floodplan/organisation> ;
+  owl:imports <http://example.org/floodplan/role> ;
+  owl:imports <http://example.org/floodplan/scenario> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+shapes:ActivitiesShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  owl:equivalentClass <http://example.org/floodplan/agent#Actions> ;
+  owl:equivalentClass <http://example.org/floodplan/goal#SubGoal> ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#areInConditionOf> ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+      sh:name "are in condition of" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#isCompletedBy> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:minCount 1 ;
+      sh:name "is completed by" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#isTheStepOf> ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+      sh:name "is the step of" ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/scenario#Activities> ;
+  sh:targetObjectsOf <http://example.org/floodplan/scenario#hasActivities> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#areInConditionOf> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#isCompletedBy> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#isTheStepOf> ;
+.
+shapes:AgentShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/agent#hasEnvironmentConsiderations> ;
+      sh:class <http://example.org/floodplan/environment#Entity> ;
+      sh:name "has environment considerations" ;
+      sh:node shapes:EnvironmentEntityShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/agent#isInvolvedInActivityOf> ;
+      sh:minCount 1 ;
+      sh:name "is involved in activity of" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/agent#playsRoleOf> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:minCount 1 ;
+      sh:name "plays role of" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/agent#Agent> ;
+  sh:targetNode <http://example.org/floodplan/agent#StateEmergencyService> ;
+  sh:targetObjectsOf <http://example.org/floodplan/role#hasDescription> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/agent#hasEnvironmentConsiderations> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/agent#isInvolvedInActivityOf> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/agent#playsRoleOf> ;
+.
+shapes:EnvironmentEntityShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/environment#hasAttributesOf> ;
+      sh:minCount 1 ;
+      sh:name "has attributes of" ;
+      sh:nodeKind sh:Literal ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/environment#hasRolesInvolved> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:minCount 1 ;
+      sh:name "has roles involved" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/environment#Entity> ;
+  sh:targetNode <http://example.org/floodplan/environment#ListOfAgenciesAndOrganisations_1> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/environment#hasAttributesOf> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/environment#hasRolesInvolved> ;
+.
+shapes:MainGoalShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#hasSubgoal> ;
+      sh:class <http://example.org/floodplan/goal#SubGoal> ;
+      sh:minCount 1 ;
+      sh:name "has subgoal" ;
+      sh:node shapes:SubGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#isAchievedBy> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:minCount 1 ;
+      sh:name "is achieved by" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:severity sh:Violation ;
+  sh:targetClass <http://example.org/floodplan/goal#MainGoal> ;
+  sh:targetNode <http://example.org/floodplan/goal#CoordinatingFloodOperation> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#achieves> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#isSubgoalOf> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#hasSubgoal> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#isAchievedBy> ;
+.
+shapes:RoleShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/interaction#cooperateInTheActionOf> ;
+      sh:class <http://example.org/floodplan/goal#SubGoal> ;
+      sh:name "cooperate in the action of" ;
+      sh:node shapes:SubGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/organisation#controls> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:name "controls" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/organisation#isPeer> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:name "is peer" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/role#hasConstraints> ;
+      sh:datatype xsd:string ;
+      sh:name "has constraints" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/role#hasDescription> ;
+      sh:class <http://example.org/floodplan/agent#Agent> ;
+      sh:minCount 1 ;
+      sh:name "has description" ;
+      sh:node shapes:AgentShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/role#hasDescription> ;
+      sh:datatype xsd:string ;
+      sh:name "has description" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/role#hasResponsibilitiesOf> ;
+      sh:class <http://example.org/floodplan/goal#MainGoal> ;
+      sh:name "has responsibilities of" ;
+      sh:node shapes:MainGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/role#hasResponsibilitiesOf> ;
+      sh:class <http://example.org/floodplan/goal#SubGoal> ;
+      sh:name "has responsibilities of" ;
+      sh:node shapes:SubGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/role#Role> ;
+  sh:targetNode <http://example.org/floodplan/role#SES> ;
+  sh:targetObjectsOf <http://example.org/floodplan/agent#playsRoleOf> ;
+  sh:targetObjectsOf <http://example.org/floodplan/environment#hasRolesInvolved> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#isAchievedBy> ;
+  sh:targetObjectsOf <http://example.org/floodplan/organisation#controls> ;
+  sh:targetObjectsOf <http://example.org/floodplan/organisation#isPeer> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#achieves> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/interaction#cooperateInTheActionOf> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/organisation#controls> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/organisation#isPeer> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/role#hasConstraints> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/role#hasDescription> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/role#hasResponsibilitiesOf> ;
+.
+shapes:ScenarioShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  owl:equivalentClass <http://example.org/floodplan/goal#MainGoal> ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#hasActivities> ;
+      sh:class <http://example.org/floodplan/scenario#Activities> ;
+      sh:minCount 1 ;
+      sh:name "has activities" ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#hasDescription> ;
+      sh:datatype xsd:string ;
+      sh:name "has description" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#hasInitiator> ;
+      sh:class <http://example.org/floodplan/scenario#Initiator> ;
+      sh:minCount 1 ;
+      sh:name "has initiator" ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#hasPostcondition> ;
+      sh:datatype xsd:string ;
+      sh:name "has postcondition" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#hasPrecondition> ;
+      sh:datatype xsd:string ;
+      sh:name "has precondition" ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/scenario#isTriggeredBy> ;
+      sh:datatype xsd:string ;
+      sh:minCount 1 ;
+      sh:name "is triggered by" ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/scenario#Scenario> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#hasActivities> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#hasDescription> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#hasInitiator> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#hasPostcondition> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#hasPrecondition> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/scenario#isTriggeredBy> ;
+.
+shapes:SubGoalShape
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:nodeKind sh:IRI ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#hasChild> ;
+      sh:class <http://example.org/floodplan/goal#SubGoal> ;
+      sh:name "has child" ;
+      sh:node shapes:SubGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#hasParent> ;
+      sh:class <http://example.org/floodplan/goal#SubGoal> ;
+      sh:minCount 1 ;
+      sh:name "has parent" ;
+      sh:node shapes:SubGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#isAchievedBy> ;
+      sh:class <http://example.org/floodplan/role#Role> ;
+      sh:name "is achieved by" ;
+      sh:node shapes:RoleShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:property [
+      sh:path <http://example.org/floodplan/goal#isSubgoalOf> ;
+      sh:class <http://example.org/floodplan/goal#MainGoal> ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+      sh:name "is subgoal of" ;
+      sh:node shapes:MainGoalShape ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:targetClass <http://example.org/floodplan/goal#SubGoal> ;
+  sh:targetNode <http://example.org/floodplan/goal#CoordinatingTheAgenciesAndOrganisations> ;
+  sh:targetNode <http://example.org/floodplan/goal#Evacuation> ;
+  sh:targetNode <http://example.org/floodplan/goal#PlanningForTsunami> ;
+  sh:targetNode <http://example.org/floodplan/goal#RespondingToTsunami> ;
+  sh:targetNode <http://example.org/floodplan/goal#Warning> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#hasChild> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#hasParent> ;
+  sh:targetObjectsOf <http://example.org/floodplan/goal#hasSubgoal> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#hasChild> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#hasParent> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#isAchievedBy> ;
+  sh:targetSubjectsOf <http://example.org/floodplan/goal#isSubgoalOf> ;
+.
