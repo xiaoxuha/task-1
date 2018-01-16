@@ -2,8 +2,10 @@
 
 # contents
 
-* [Tasks_Overview spreadsheeet showing input and outputs](Tasks_Overview.xlsx)
-* [Models from sample data ](models)
+* [Tasks_Overview spreadsheeet showing input and outputs](Task_Overview.xlsx)
+* [Models derived from sample data](models)
+* [Models and output artefacts](outputs)
+* [Error reports](error_reports)
 
 # overview
 
